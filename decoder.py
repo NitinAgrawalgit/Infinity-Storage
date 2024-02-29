@@ -1,16 +1,30 @@
-import numpy as np
 import cv2
+import numpy as np
+import sys
 
 def main():
-    file_name = 'harry_potter_yt' #FILE NAME TO BE ENTERED HERE
-    video_path = '../videos/' + file_name + '.mp4'
+    video_path = getFileName()
 
     frames = extractFrames(video_path)
 
     pages = decodeFrames(frames)
 
-    file_path = '../textfiles_result/' + file_name + '.txt'
+    file_path = video_path.replace('.mp4', '_decoded.txt')
     writeToFile(pages, file_path)
+
+def getFileName():
+    if len(sys.argv) < 2:
+        print("\nError: Video File not provided")
+        print("Try 'python encoder.py file_name.mp4'\n")
+        sys.exit(1)
+
+    file_name = sys.argv[1]
+    
+    if(file_name.endswith('.mp4') == False):
+       print("\nError: Only .mp4 files are supported!")
+       sys.exit(1)
+    
+    return file_name
 
 def extractFrames(video_path):
     video = cv2.VideoCapture(video_path)

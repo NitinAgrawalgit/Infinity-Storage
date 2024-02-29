@@ -1,20 +1,34 @@
-import numpy as np
 import cv2
+import numpy as np
+import sys
 
 def main():
     num_rows = 240 #Defining Resolution (240p)
     num_cols = 320
 
-    file_name = 'harry_potter_1' #FILE NAME TO BE ENTERED HERE
-    file_path = '../textfiles_source/' + file_name + '.txt'
+    file_path = getFileName()
 
     pages = readFile(num_rows, num_cols, file_path)
 
     frames = createFrames(pages, num_rows, num_cols)
 
-    video_path = '../videos/' + file_name + '.mp4'
+    video_path = file_path.replace('.txt', '.mp4')
     frame_rate = 4
     compileVideo(frames, video_path, frame_rate)
+
+def getFileName():
+    if len(sys.argv) < 2:
+        print("\nError: Text File not provided")
+        print("Try 'python encoder.py file_name.txt'\n")
+        sys.exit(1)
+
+    file_name = sys.argv[1]
+    
+    if(file_name.endswith('.txt') == False):
+       print("\nError: Only .txt files are supported!")
+       sys.exit(1)
+
+    return file_name
 
 def initImage(num_rows, num_cols):
     img = np.empty((num_rows, num_cols), dtype = np.uint8) #np.uint8 instead of just int, bcz cv2.VideoWriter needs this type
