@@ -19,11 +19,11 @@
 
 Encode a Text File into Video Format:
    ```
-   python encode.py input.txt
+   python encoder.py input.txt
    ```
 Decode Video File back to Text Format:
    ```
-   python decode.py encoded_video.mp4
+   python decoder.py encoded_video.mp4
    ```
 
 ## Contribute
